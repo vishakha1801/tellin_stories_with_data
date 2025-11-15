@@ -1,269 +1,201 @@
----
-title: "Critique by Design – High Street Coffee Caffeine Levels"
-layout: default
----
+# 🖼️ Critique by Design: A Statistical Analysis of the Work of Bob Ross 🪼✨  
+**MakeoverMonday Redesign — Vishakha Pathak**
 
-# Critique by Design: High Street Coffee Caffeine Levels
+## Original Data Visualization and Why I Selected It
 
-## 1. Original data visualization and context
+For this assignment, I selected a visualization from FiveThirtyEight’s article “A Statistical Analysis of the Work of Bob Ross.” The dataset includes tag-level information describing what appears in each episode of The Joy of Painting. The original chart in the article is a long ranked list showing how frequently each element appears across Ross’s paintings.
 
-For this critique-by-design assignment, I chose a visualization based on the **Which?** article:
+<p align="center">
+  <img src="original_viz.png" width="80%" />
+</p>
 
-> “Caffeine levels in high street coffees vary significantly, Which? finds”
+### Why I chose this visualization 🐚
 
-The original chart compared the caffeine content of cappuccino, espresso and filter coffee across several UK high-street coffee chains (e.g. Costa, Pret, Starbucks). It was part of a public-facing article about how much caffeine customers actually get in a typical drink.
+The FiveThirtyEight article provides a thoughtful statistical analysis of Bob Ross’s work. It discusses conditional probability, joint appearance of elements, and even clustering techniques to explore structure within the paintings. However, the main chart that accompanies this analysis is simply a descending bar chart of individual tag frequencies. This created an interesting contrast: the article talks about relationships and co-occurrence, but the visualization does not actually depict any of those ideas.
 
-**Original source**
+This disconnect made it a compelling candidate for redesign. The bar chart is accurate and readable at a surface level, but it stops at raw frequency. It does not help the viewer understand how elements relate to each other or what a typical Bob Ross landscape looks like. Trees, clouds, lakes, and mountains appear at the top of the list, but without grouping or hierarchy, the meaning behind these frequencies is not immediately clear. Rare elements appear directly beside core elements, all with identical visual weight, which forces the viewer to mentally sort through more than thirty categories on their own.
 
-- Article: [Caffeine levels in high street coffees vary significantly, Which? finds](https://www.which.co.uk/news/article/caffeine-levels-in-high-street-coffees-vary-significantly-which-finds-ay7cA4G1zh1S)
-- Challenge: [MakeoverMonday](https://www.makeovermonday.co.uk/)
+What stood out most is that looking only at the most occurring elements did not meaningfully answer the question the article itself raises: what structural patterns define Bob Ross’s work? Frequency alone cannot tell us which combinations matter, why certain scenes repeat, or what constitutes a typical painting. Covariance and conditional probability were central to the narrative of the article, but they were not visualized at all.
 
-I picked this visualization because:
+These gaps created an opportunity to design something more intentional. A more effective visualization could highlight not only what appears most often, but also what appears together, and how a viewer might interpret the structure of an “average” Bob Ross landscape.
 
-- It addresses a **clear, relatable question**: *“How much caffeine am I really drinking?”*
-- The stakes are non-trivial for people sensitive to caffeine (sleep, anxiety, pregnancy, health guidance).
-- The original presentation made it hard to quickly see **distribution** and **risk thresholds**, especially which chains regularly exceed recommended daily limits.
+### Why I selected this visualization 🌊
 
----
+I chose this dataset because Bob Ross’s work is deeply iconic and recognizable, yet few people have explored the data behind his art. The original visualization focused only on raw counts and did not reveal:
 
-## 2. What I found problematic in the original visualization
+- which elements appear together  
+- which elements dominate a “typical” Bob Ross scene  
+- what structural patterns define his art across 400+ episodes  
 
-Using Stephen Few’s **Data Visualization Effectiveness Profile**, I critiqued the original visualization along multiple dimensions. Below is a summary of my key observations from the Google Form.
-
-### 2.1 Purpose and message
-
-- **Strengths**
-  - Clear topical focus: high-street coffee caffeine levels.
-  - Uses real-world brands that are instantly recognizable.
-- **Issues**
-  - The main message (“caffeine varies a lot and can be unexpectedly high”) gets diluted.
-  - It is not immediately obvious **which drinks are “too high”** relative to a recommended threshold (e.g. 200 mg or 400 mg per day).
-  - The visualization feels closer to “interesting table of numbers” than a **strong, memorable takeaway**.
-
-### 2.2 Data and encoding
-
-- **Data**
-  - Each record includes: chain, drink type (espresso / cappuccino / filter), and caffeine in mg.
-- **Encoding issues**
-  - Multiple drink types and chains in one dense display creates **cognitive overload**.
-  - It is difficult to compare distributions of caffeine levels **within** a chain and **across** chains at the same time.
-  - The design does not highlight **frequency patterns** (e.g. how often drinks fall into “very high caffeine” bins).
-
-### 2.3 Use of color, hierarchy and labeling
-
-- **Positives**
-  - Brand logos / names help people quickly locate their favorite chain.
-- **Issues**
-  - Color is used more for branding than for meaning, which competes with the data story.
-  - There is limited visual hierarchy; all bars/values feel equally important.
-  - Labels can feel cramped, and numeric values are not always easy to scan.
-
-### 2.4 Audience and accessibility
-
-- **Target audience**
-  - General public, coffee drinkers, and potentially people monitoring caffeine intake.
-- **Issues**
-  - For a non-technical audience, the design asks for too much **mental arithmetic** (e.g. adding up drinks, comparing across chains).
-  - The visualization doesn’t explicitly connect caffeine levels to **guidelines** (like 200 mg at a time or 400 mg per day), so it is hard to know what is “too much.”
-
-### 2.5 Comparing critique methods: Few vs Good Charts
-
-- Stephen Few’s **Effectiveness Profile** pushed me to systematically evaluate:
-  - Purpose, message and audience.
-  - Clarity of encodings and effectiveness of color.
-  - Overall usability and decision support.
-- The **Good Charts** method emphasizes:
-  - Story framing and narrative arc.
-  - The “so what?” and how to make charts more persuasive and memorable.
-
-**What Few adds**
-
-- A more **checklist-like, diagnostic view** of the chart’s mechanics.
-- A structured way to note specific weaknesses (e.g. labeling, clutter, encoding choices).
-
-**What might be missing**
-
-- Fewer prompts about **emotional resonance** and storytelling.
-- Less emphasis on how the visualization fits into a broader narrative or communication flow.
-
-Together, the two methods helped me move from “this feels busy” to concrete design decisions for the redesign.
+There was an opportunity to redesign the visualization in a way that tells a clearer, richer story about the underlying structure of his paintings.
 
 ---
 
-## 3. Step 3 – Sketching and wireframing the redesign
+## Critique of the Original Viz (Using Stephen Few’s Data Visualization Effectiveness Profile) 🌟
 
-I created low-fidelity sketches before building anything in Tableau. My main design goal was to answer two user questions more directly:
+I used Stephen Few’s framework to evaluate the original visualization, and a few patterns immediately stood out.
 
-1. **“Where does my favorite chain sit compared to others?”**
-2. **“How often are drinks in a range that might be too high for me?”**
+### Clarity  
+The chart showed the raw counts clearly enough, but it did not really communicate any deeper meaning. Everything was presented at the same visual level, with no grouping, hierarchy, or color cues to guide the reader.
 
-### 3.1 Key sketch ideas
+### Accuracy  
+The numbers themselves were accurate, but accuracy alone was not enough here. Because all elements looked identical on the screen, it was easy to assume that everything mattered equally, even though some elements define Bob Ross’s style far more than others.
 
-1. **Frequency view (overall distribution)**
-   - Group drinks into caffeine bins (e.g. 0–100 mg, 100–200 mg, 200–300 mg, 300+ mg).
-   - Show a simple **frequency bar chart** counting how many drinks fall into each bin.
-   - Highlight bins above a “concern” threshold (e.g. >200 mg).
+### Aesthetics  
+The design felt very utilitarian. There was almost no spacing, no visual structure, and no sense of intention behind how the information was laid out. It was clean, but not expressive.
 
-2. **Conditional frequency by chain**
-   - For each chain, show the **percentage of its drinks** that cross a threshold (for example, 200 mg).
-   - This helps answer: *“If I pick this chain at random, how likely is it that my drink is very high in caffeine?”*
+### Meaning and Insight  
+This is where the chart struggled the most. It did not help answer:
 
-3. **Design simplifications**
-   - Use **one main metric** (caffeine in mg) and **one secondary dimension** at a time.
-   - Rely on a **small, consistent color palette** where color encodes meaning (e.g. “high caffeine”) instead of just brand identity.
-   - Add a reference line or annotation for guidance like “up to 200 mg is a common single-serving recommendation.”
+> What does a typical Bob Ross painting actually look like?
 
-These sketches helped me see that focusing on **frequency** and **conditional frequency** could tell a clearer, more actionable story than simply plotting raw values by chain and drink type.
+It also never visualized co-occurrence or relationships between elements, even though the FiveThirtyEight article talks about these concepts extensively. Without that, the visualization stays at isolated frequencies rather than patterns.
 
----
+### Target Audience Needs  
+For general readers, the story could have been stronger. For analytical audiences, the visualization did not go deep enough into structure or relationships. It sat in the middle, making it less effective for both.
 
-## 4. Step 4 – Testing the solution with peers
-
-I shared my sketched ideas and early Tableau drafts with peers and captured anonymized feedback.
-
-### 4.1 Participants
-
-- Participant 1: student, mid-20s, data visualization course
-- Participant 2: student, early 20s, no prior data viz background
-
-### 4.2 Key questions I asked
-
-- “Can you tell me what you think this chart is about?”
-- “What do you find surprising or confusing?”
-- “If you cared about your caffeine intake, what decision could you make from this?”
-- “Is there anything you’d change or make clearer?”
-
-### 4.3 What I heard
-
-**What worked**
-
-- The idea of **bins** for caffeine levels made the data feel more concrete:
-  - Comments like: “I can see that a lot of drinks are above 200 mg” or “the 300+ mg bar looks scary.”
-- The conditional frequency view by chain helped surface differences:
-  - “So Costa has a much higher share of high-caffeine drinks than Starbucks.”
-
-**What was confusing**
-
-- The initial bin labels were not intuitive (“Bin 1, Bin 2…”).
-- One participant did not immediately understand what the **threshold line** meant.
-- The legend and annotation for “high caffeine” were separated from the chart, causing extra eye movement.
-
-### 4.4 Changes I made based on feedback
-
-- Renamed bins to more meaningful ranges such as:
-  - “Up to 100 mg”, “100–200 mg”, “200–300 mg”, “300+ mg”
-- Added a **clear textual annotation** explaining the threshold, for example:
-  > “Bars in darker color show drinks above 200 mg of caffeine, which many guidelines consider a high single serving.”
-- Moved the legend closer to the chart and tightened the label wording.
-- Simplified tooltips to show just:
-  - Chain
-  - Drink type
-  - Caffeine (mg)
-  - Whether it crosses the threshold
+### Reflection on the critique method 🪸  
+Stephen Few’s framework was helpful because it made me look at the visualization in a structured way. Compared to Good Charts, which focuses on narrative, Few’s method felt more diagnostic. Using both mindsets helped me think through what the original chart was missing and how I could redesign it to tell the story the data hints at.
 
 ---
 
-## 5. Step 5 – Final redesigned visualizations (Tableau)
+## Sketching the Solution 🌈
 
-I built the final redesign in Tableau and published it to Tableau Public.
+Before building the redesign, I created a simple **emoji-based sketch** of the frequency chart to test whether using icons would make the landscape elements easier to interpret.
 
-### 5.1 Visualization 1 – Frequency of caffeine levels
-
-**Link:**  
-[Frequency of caffeine levels – Tableau Public](https://public.tableau.com/app/profile/vishakha.pathak6304/viz/Book1_17630934455190/Sheet1?publish=yes)
-
-**What it shows**
-
-- A **frequency bar chart** of drinks grouped into caffeine ranges.
-- The bins above 200 mg are visually emphasized.
-- This view answers:
-  - “How many drinks fall into low, medium, and high caffeine ranges?”
-
-**Design choices**
-
-- Single x-axis (caffeine bins) with clear text labels.
-- Bars for higher caffeine bins styled consistently so they stand out.
-- Simple annotation noting why 200 mg is a meaningful cutoff.
+<p align="center">
+  <img src="sketch.png" width="80%" />
+</p>
 
 ---
 
-### 5.2 Visualization 2 – Conditional frequency by chain
+## Testing the Solution 🧪🐙
 
-**Link:**  
-[Conditional frequency of high-caffeine drinks by chain – Tableau Public](https://public.tableau.com/app/profile/vishakha.pathak6304/viz/Book2_17630947533450/Sheet1?publish=yes)
+I shared early wireframes with three classmates during an informal critique session. 
 
-**What it shows**
+### Participants (PII removed) 
+- Student, mid-20s, MSPPM program — has taken previous data visualization courses
+- Student, mid-20s, MISM program — no prior visualization background
+- Student, late-20s, Tepper School of Business — design and communication experience
 
-- For each chain, the **percentage of its drinks that exceed 200 mg** (or another chosen threshold).
-- This reframes the question as:
-  - “If I buy a coffee from this chain, how likely is it that my drink is very high in caffeine?”
+### Feedback Themes #### 
+⭐ What worked well 
+- The **emoji-supported bar chart** was described as “instantly readable” and “fun without being distracting.”
+-  Peers said the layout made it **easy to compare frequencies quickly**, much clearer than the original visualization.
+- Several people liked that the redesign stayed focused on a **single clear question**: what Bob Ross paints most often.
 
-**Design choices**
+#### ⚠️ What needed improvement 
+- The **co-occurrence heatmap** felt dense when first viewed, and people said they needed a moment to interpret it.
+- A few labels were long or visually similar, so classmates recommended using **emojis as anchors** to help differentiate categories.
+- One participant suggested adding a short caption explicitly stating what the heatmap reveals (e.g., which elements pair together most often).
 
-- Each bar represents one chain; the bar length encodes the **share of high-caffeine drinks**.
-- Chains are sorted from highest to lowest share, so patterns appear quickly.
-- Labels show percentages to keep interpretation simple (e.g. “60% of drinks above 200 mg”).
-
----
-
-## 6. Summary, reflection and what changed
-
-### 6.1 Why this visualization was included
-
-I chose this visualization because:
-
-- It speaks to a topic that many people care about but **often underestimate**: caffeine intake.
-- The original chart was informative but did not strongly support **decision-making** about which chains or drinks might be safer choices for people with caffeine limits.
-- The MakeoverMonday context encouraged me to think about both **clarity** and **storytelling**, not just replicating the original.
-
-### 6.2 How the critique shaped the redesign
-
-The **Data Visualization Effectiveness Profile** forced me to be specific about:
-
-- Who the audience is (general consumers, not caffeine scientists).
-- What decision I want to help them with (choosing chains/drinks with manageable caffeine).
-- Which encodings were confusing in the original.
-
-This directly led to:
-
-- Focusing on **frequency** and **conditional frequency**, which better aligns with risk and likelihood.
-- Simplifying the number of variables shown at once.
-- Using color to flag **risk levels** instead of reinforcing brand identity.
-
-The **Good Charts** lens reminded me to keep asking:
-
-- “What is the **headline** of this chart?”
-- “What is the one thing I want someone to remember after looking at it?”
-
-### 6.3 What my redesigned visualization shows
-
-The final redesign emphasizes:
-
-- There is a **wide spread** of caffeine levels in seemingly similar drinks.
-- Some chains have a **much higher share** of high-caffeine drinks than others.
-- For a consumer, this means that where they buy their coffee can significantly change their caffeine exposure, even for the same type of drink.
-
-Overall, my goal was not just to make the visualization “prettier,” but to make it **more actionable** and aligned with how a reader might think:
-
-> “If I am monitoring my caffeine, which chains and types of drinks should I be more careful with?”
+### 🎯 Actionable changes I implemented after testing 
+- Added **emoji markers** to the heatmap labels to reduce scanning friction.
+- Simplified the heatmap by focusing on **the strongest co-occurrences** rather than every possible pair.
+- Adjusted the **color scale** to improve contrast and help viewers spot patterns immediately.
+- Strengthened **titles and subtitles** to reinforce the narrative and clarify what each chart is meant to show.
 
 ---
 
-## 7. Sources and tools
+## Step Five: Final Redesigned Visualizations 🌟🎨
 
-- Original article and visualization: “Caffeine levels in high street coffees vary significantly, Which? finds” (Which?, 2023).
-- Dataset and inspiration: [MakeoverMonday](https://www.makeovermonday.co.uk/).
-- Tools:
-  - Tableau Public for data exploration and final charts.
-  - Pen-and-paper sketches for initial wireframes.
+### 1. Visualization 1 — “What Bob Ross Painted Most Often”  
+📊 Emoji-enhanced frequency chart built in Tableau.
+
+For the redesign, I wanted the chart to feel clearer and more inviting than the original long bar list. Adding emojis made the elements instantly recognizable and helped break up categories that otherwise look very similar in text. A cleaner color ramp and simpler layout make it much easier to see which elements define a “typical” Bob Ross painting, without overwhelming the viewer with unnecessary detail.
+
+<p align="center">
+  <img src="figure1.png" width="80%" />
+</p>
+
+[View in Tableau](https://public.tableau.com/views/Book1_17630934455190/Sheet1)
 
 ---
 
-## 8. AI usage
+### 2. Visualization 2 — “How Elements Co-Occur Across Episodes”  
+🔥 Conditional probability heatmap (P(A|B)) built in Tableau.
 
-I used AI (ChatGPT) to help:
+For this redesign, I wanted to move beyond simple frequency and show which elements actually appear together. The heatmap makes these patterns visible at a glance—like cabins pairing with snowy mountains or winter scenes clustering with snow on the ground. Adding emojis and tightening the color scale helped make a dense chart feel more readable while still highlighting the relationships that define Bob Ross’s landscapes.
 
-- Draft and organize the written narrative for this portfolio page.
-- Refine wording for the critique, user feedback summary and reflections.
+<p align="center">
+  <img src="figure2.png" width="80%" />
+</p>
 
-All data selection, Tableau work, visual design decisions and final design choices are my own.
+[View in Tableau](https://public.tableau.com/views/Book4_17631635148130/Sheet1)
+
+---
+
+### 3. Visualization 3 — “Five Data-Generated ‘Typical’ Bob Ross Paintings”  
+🎨 Simulated scenes using co-occurrence patterns.
+
+This chart shows five “typical” Bob Ross scenes generated from the dataset using conditional probability. Each painting starts with a core element—like a lake or mountains and adds the four elements most likely to appear with it. Visualizing these combinations as emoji-labeled bubbles makes it easy to compare the structure of different scene types at a glance. It is a playful way to translate the numbers into something that actually feels like a Bob Ross painting.
+
+<p align="center">
+  <img src="figure3.png" width="80%" />
+</p>
+
+[View in Tableau](https://public.tableau.com/views/Book3_17631609191530/Sheet5)
+
+---
+
+## What I Attempted to Do Differently 🪼✨  
+
+In the redesign, I wanted to move beyond simply replotting the data. Instead of a flat list of counts, I tried to build a clearer narrative — what appears most often, what appears together, and what a “typical” Bob Ross scene might look like. I made co-occurrence patterns visible, added a small simulation, and used emojis and cleaner spacing to make the charts more approachable.
+
+---
+
+## Data and Source Information
+
+- **Dataset:** MakeoverMonday — Bob Ross Paintings  
+- **Source:** https://makeovermonday.co.uk  
+- Processed in Python (episode-element matrix, conditional probability, simulation)  
+- Visualized in Tableau Public  
+
+---
+
+## Python Analysis and Reproducibility 🐠📓
+
+All probability calculations, co-occurrence analysis, and simulated “average” Bob Ross paintings were generated in Python.
+
+**➡️ The full notebook is available at: `bob_ross.ipynb`**
+
+It includes:
+
+- Tag cleaning  
+- Episode × element binary matrix  
+- Conditional and joint probability calculations  
+- Top co-occurring element extraction  
+- Painting simulations  
+- CSV exports for Tableau  
+
+---
+## Bonus: AI-Generated “Average” Painting for Painting 3 🐙🌲  
+
+As a small bonus experiment, I used ChatGPT to generate an illustrative “average” Bob Ross–style scene based on **Painting 3** from my simulation (the cabin-centered scene with trees, mountains, water, and sky).
+
+I prompted ChatGPT with a description derived directly from the co-occurrence patterns in the data. 
+
+Result: 
+<p align="center"> <img src="chagpt.png" width="60%" /> </p>
+
+Prompt: 
+```text
+You are helping me visualize an ‘average’ Bob Ross painting based on my simulated Painting 3. 
+Painting 3 is centered on a cozy cabin scene. Please generate a Bob Ross–style landscape that includes:
+- a small wooden cabin in the foreground
+- evergreen trees surrounding the cabin
+- snow-capped mountains in the midground
+- a calm lake reflecting the sky
+- soft, layered clouds in a sunset sky
+
+The overall mood should feel calm and hopeful, with gentle lighting and soft brush textures, similar to an episode of “The Joy of Painting.”
+```
+
+---
+## AI Usage Disclosure
+
+I used ChatGPT to assist with:
+- Python helper functions  
+- Formatting this Markdown  
+
+All analysis, design decisions, critique insights, and Tableau builds were done by me.
