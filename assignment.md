@@ -157,7 +157,7 @@ In the redesign, I wanted to move beyond simply replotting the data. Instead of 
 
 All probability calculations, co-occurrence analysis, and simulated “average” Bob Ross paintings were generated in Python.
 
-**➡️ The full notebook is available at: `bob_ross.ipynb`**
+**➡️ The full notebook is available at: https://github.com/vishakha1801/tellin_stories_with_data/blob/main/bob_ross.ipynb **
 
 It includes:
 
